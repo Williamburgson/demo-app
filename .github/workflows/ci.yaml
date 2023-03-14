@@ -25,16 +25,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.DEPLOY_PAT }}
-      - id: repo
-        name: Generate compliant repo path
-        uses: ASzc/change-string-case-action@v1
-        with:
-          string: ${{ github.repository }}
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/${{ steps.repo.outputs.lowercase }}:${{ github.sha }}, ghcr.io/${{ steps.repo.outputs.lowercase }}:latest
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}, ghcr.io/${{ github.repository }}:latest
 
   # deploy-dev:
   #   runs-on: ubuntu-latest
